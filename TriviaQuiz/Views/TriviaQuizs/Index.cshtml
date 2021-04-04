@@ -1,0 +1,66 @@
+﻿@using TriviaQuiz.Models;
+
+@{
+    ViewBag.Title = "Index";
+}
+
+@{
+    var results = ViewData["QuestionOption"] as TriviaQuestionOption;
+}
+@using (Html.BeginForm("Submit", "TriviaQuizs", FormMethod.Post))
+{
+    foreach (var quetion in @results.results)
+    {
+        <h5><u>@quetion.question</u></h5>
+        <div class="optioncheck">
+            <ol type="1">
+                <li>
+                    @Html.CheckBox(@quetion.correct_answer, false)
+                    @Html.LabelFor(m => @quetion.correct_answer, @quetion.correct_answer)
+                </li>
+                @foreach (var option in @quetion.incorrect_answers)
+                {
+                    <li>
+                        @Html.CheckBox(@option, false)
+                        @Html.LabelFor(m => @option, @option)
+                    </li>
+                }
+            </ol>
+
+        </div>
+    }
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Submit" id="Submit" class="btn btn-default" />
+        </div>
+    </div>
+}
+    @*<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#Submit").click(function (e) {
+                //var option = $(this).attr('.optionId');
+                var formdata = $("#li").serializeArray();
+                //$("[name='chklistitem']").each(function (index, data) {
+                //    if (data.checked) {
+                //        chected.push(data.value + "---" + data.nextSibling.textContent);
+                //    }
+                //});
+                alert(formdata);
+                //alert(option);
+                $.ajax({
+                    type: "POST",
+                    url: "/TriviaQuizs/Submit",
+                    contentType: "application/json; charset=utf-8",
+                    data: null,
+                    dataType: "html"
+
+                });
+
+                return false;
+            });
+        });
+    </script>*@
+
+
